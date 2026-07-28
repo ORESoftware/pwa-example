@@ -90,6 +90,8 @@
     border-radius: 4px;
     border: 1px solid #eee;
     background-color: #fafafa;
+    color: inherit;
+    font: inherit;
     height: 40px;
     width: 200px;
     margin: 0 8px 16px;
@@ -386,44 +388,56 @@
   <input type="hidden" #selection>
 
   <div class="card-container">
-    <div class="card card-small" (click)="selection.value = 'component'" tabindex="0">
+    <button type="button" class="card card-small" (click)="selection.value = 'component'">
         <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
 
       <span>New Component</span>
-    </div>
+    </button>
 
-    <div class="card card-small" (click)="selection.value = 'material'" tabindex="0">
+    <button type="button" class="card card-small" (click)="selection.value = 'material'">
         <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
 
       <span>Angular Material</span>
-    </div>
+    </button>
 
-    <div class="card card-small" (click)="selection.value = 'dependency'" tabindex="0">
+    <button type="button" class="card card-small" (click)="selection.value = 'dependency'">
       <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
 
       <span>Add Dependency</span>
-    </div>
+    </button>
 
-    <div class="card card-small" (click)="selection.value = 'test'" tabindex="0">
+    <button type="button" class="card card-small" (click)="selection.value = 'test'">
       <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
 
       <span>Run and Watch Tests</span>
-    </div>
+    </button>
 
-    <div class="card card-small" (click)="selection.value = 'build'" tabindex="0">
+    <button type="button" class="card card-small" (click)="selection.value = 'build'">
       <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
 
       <span>Build for Production</span>
-    </div>
+    </button>
   </div>
 
   <!-- Terminal -->
-  <div class="terminal" [ngSwitch]="selection.value">
-      <pre *ngSwitchDefault>ng generate component xyz</pre>
-      <pre *ngSwitchCase="'material'">ng add @angular/material</pre>
-      <pre *ngSwitchCase="'dependency'">ng add _____</pre>
-      <pre *ngSwitchCase="'test'">ng test</pre>
-      <pre *ngSwitchCase="'build'">ng build --prod</pre>
+  <div class="terminal">
+    @switch (selection.value) {
+      @case ('material') {
+        <pre>ng add @angular/material</pre>
+      }
+      @case ('dependency') {
+        <pre>ng add _____</pre>
+      }
+      @case ('test') {
+        <pre>ng test</pre>
+      }
+      @case ('build') {
+        <pre>ng build</pre>
+      }
+      @default {
+        <pre>ng generate component xyz</pre>
+      }
+    }
   </div>
 
   <!-- Links -->
