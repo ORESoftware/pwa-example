@@ -1,10 +1,10 @@
 # PwaExample
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.9.
+This project uses Angular 21 and includes an Angular service worker for production builds.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app automatically reloads when source files change.
 
 ## Code scaffolding
 
@@ -12,16 +12,20 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `npm run build` to create a production build in `dist/pwa-example/`, including the generated service-worker manifest.
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `npm test` to execute the unit tests once with Vitest.
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Run `npm run e2e` to execute the browser smoke test with Playwright.
+
+## Linting
+
+Run `npm run lint` to lint TypeScript and Angular templates with ESLint.
 
 ## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+For more help, run `npm run ng -- help` or see the [Angular CLI documentation](https://angular.dev/tools/cli).
