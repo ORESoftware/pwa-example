@@ -32,7 +32,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: '22.12.0'
+          node-version: '24.15.0'
           cache: npm
 
       - name: Use declared npm
@@ -64,8 +64,9 @@ jobs:
       fail-fast: false
       matrix:
         node:
-          - '20.19.0'
-          - '22.12.0'
+          - '22.22.3'
+          - '24.15.0'
+          - '26.0.0'
 
     steps:
       - name: Checkout exact revision
