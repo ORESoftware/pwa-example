@@ -15,19 +15,15 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  lockfile-reconcile:
-    name: reconcile npm lockfile
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+  lockfile-verify:
+    name: verify npm lockfile
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    permissions:
-      contents: write
     steps:
-      - name: Checkout PR head for lockfile reconciliation
+      - name: Checkout exact revision
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          persist-credentials: true
+          persist-credentials: false
 
       - name: Set up Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
@@ -38,26 +34,16 @@ jobs:
       - name: Use declared npm
         run: npm install --global npm@11.0.0
 
-      - name: Reconcile package-lock without lifecycle scripts
-        run: npm install --package-lock-only --ignore-scripts
-
-      - name: Commit lockfile drift only
+      - name: Verify package-lock is canonical
         shell: bash
         run: |
           set -euo pipefail
-          if git diff --quiet -- package-lock.json; then
-            echo 'package-lock.json is already canonical'
-            exit 0
-          fi
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add package-lock.json
-          git commit -m 'chore: reconcile npm lockfile for Angular 22 peer contract'
-          git push origin "HEAD:${{ github.event.pull_request.head.ref }}"
+          npm install --package-lock-only --ignore-scripts
+          git diff --exit-code -- package-lock.json
 
   verify:
     name: node-${{ matrix.node }}
-    needs: lockfile-reconcile
+    needs: lockfile-verify
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     strategy:
