@@ -90,6 +90,8 @@
     border-radius: 4px;
     border: 1px solid #eee;
     background-color: #fafafa;
+    color: inherit;
+    font: inherit;
     height: 40px;
     width: 200px;
     margin: 0 8px 16px;
@@ -386,44 +388,56 @@
   <input type="hidden" #selection>
 
   <div class="card-container">
-    <div class="card card-small" (click)="selection.value = 'component'" tabindex="0">
+    <button type="button" class="card card-small" (click)="selection.value = 'component'">
         <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
 
       <span>New Component</span>
-    </div>
+    </button>
 
-    <div class="card card-small" (click)="selection.value = 'material'" tabindex="0">
+    <button type="button" class="card card-small" (click)="selection.value = 'material'">
         <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
 
       <span>Angular Material</span>
-    </div>
+    </button>
 
-    <div class="card card-small" (click)="selection.value = 'dependency'" tabindex="0">
+    <button type="button" class="card card-small" (click)="selection.value = 'dependency'">
       <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
 
       <span>Add Dependency</span>
-    </div>
+    </button>
 
-    <div class="card card-small" (click)="selection.value = 'test'" tabindex="0">
+    <button type="button" class="card card-small" (click)="selection.value = 'test'">
       <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
 
       <span>Run and Watch Tests</span>
-    </div>
+    </button>
 
-    <div class="card card-small" (click)="selection.value = 'build'" tabindex="0">
+    <button type="button" class="card card-small" (click)="selection.value = 'build'">
       <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
 
       <span>Build for Production</span>
-    </div>
+    </button>
   </div>
 
   <!-- Terminal -->
-  <div class="terminal" [ngSwitch]="selection.value">
-      <pre *ngSwitchDefault>ng generate component xyz</pre>
-      <pre *ngSwitchCase="'material'">ng add @angular/material</pre>
-      <pre *ngSwitchCase="'dependency'">ng add _____</pre>
-      <pre *ngSwitchCase="'test'">ng test</pre>
-      <pre *ngSwitchCase="'build'">ng build --prod</pre>
+  <div class="terminal">
+    @switch (selection.value) {
+      @case ('material') {
+        <pre>ng add @angular/material</pre>
+      }
+      @case ('dependency') {
+        <pre>ng add _____</pre>
+      }
+      @case ('test') {
+        <pre>ng test</pre>
+      }
+      @case ('build') {
+        <pre>ng build</pre>
+      }
+      @default {
+        <pre>ng generate component xyz</pre>
+      }
+    }
   </div>
 
   <!-- Links -->
@@ -472,8 +486,8 @@
       </svg>
     </a>
 
-    <a class="circle-link" title="Protractor" href="https://www.protractortest.org/" target="_blank" rel="noopener">
-      <svg alt="Angular Protractor Logo" xmlns="http://www.w3.org/2000/svg" width="21.81" height="23.447" viewBox="0 0 21.81 23.447">
+    <a class="circle-link" title="Playwright" href="https://playwright.dev/" target="_blank" rel="noopener">
+      <svg alt="End-to-end test logo" xmlns="http://www.w3.org/2000/svg" width="21.81" height="23.447" viewBox="0 0 21.81 23.447">
         <g id="Group_26" data-name="Group 26" transform="translate(0)">
           <path id="Path_28" data-name="Path 28" d="M4620.155,311.417h0l-10.881,3.9,1.637,14.4,9.244,5.152,9.244-5.152,1.685-14.4Z" transform="translate(-4609.274 -311.417)" fill="#e13439"/>
           <path id="Path_29" data-name="Path 29" d="M4702.088,311.417v23.447l9.244-5.152,1.685-14.4Z" transform="translate(-4691.207 -311.417)" fill="#b52f32"/>
