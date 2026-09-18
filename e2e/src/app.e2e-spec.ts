@@ -1,23 +1,18 @@
-import { AppPage } from './app.po';
-import { browser, logging } from 'protractor';
+import { expect, test } from '@playwright/test';
 
-describe('workspace-project App', () => {
-  let page: AppPage;
+test('displays the welcome message without browser errors', async ({ page }) => {
+  const browserErrors: string[] = [];
 
-  beforeEach(() => {
-    page = new AppPage();
+  page.on('console', message => {
+    if (message.type() === 'error') {
+      browserErrors.push(message.text());
+    }
   });
+  page.on('pageerror', error => browserErrors.push(error.message));
 
-  it('should display welcome message', () => {
-    page.navigateTo();
-    expect(page.getTitleText()).toEqual('pwa-example app is running!');
-  });
-
-  afterEach(async () => {
-    // Assert that there are no errors emitted from the browser
-    const logs = await browser.manage().logs().get(logging.Type.BROWSER);
-    expect(logs).not.toContain(jasmine.objectContaining({
-      level: logging.Level.SEVERE,
-    } as logging.Entry));
-  });
+  await page.goto('/');
+  await expect(
+    page.getByText('pwa-example app is running!', { exact: true })
+  ).toBeVisible();
+  expect(browserErrors).toEqual([]);
 });
